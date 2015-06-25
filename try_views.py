@@ -10,19 +10,17 @@ session = cluster.connect('fb_report')
 def index():
     user = { 'nickname': 'Miguel' } # fake user
     return render_template("index.html",
-       title = 'Home',
-       user = user)
+      			 title = 'Home',
+      			 user = user)
 
-@app.route("/cassandra_test")
-def cassandra_test():
-    query_results = session.execute("SELECT ad_group_id,bid_actions,bid_type  FROM bid_table LIMIT 10")
-
+@app.route('/cassandra_test/<given_ad_id>/')
+def cassandra_test(given_ad_id):
+    query_results = session.execute("SELECT ad_id, date_start, clicks, cost_per_unique_click  FROM ads_table WHERE ad_id= %s" % (given_ad_id))
     cities=[]
     for result in query_results:
-        cities.append(dict(ad_group_id=result[0], bid_actions=result[1], bid_type=result[2]))
+        cities.append(dict(date=result[1], clicks=result[2], cost_per_unique_click=result[3]))
 
     return render_template('cities.html', cities=cities)
-
 
 if __name__ == '__main__':
     app.run(host='0.0.0.0', debug=True)

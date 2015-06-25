@@ -1,11 +1,11 @@
 from flask import render_template
-from app import app
+#from app import app
 from flask import Flask
 from flask_cassandra import CassandraCluster
 
-#app = Flask(__name__)
-#cassandra = CassandraCluster()
-#app.config['CASSANDRA_NODES'] = ['52.8.165.110']
+app = Flask(__name__)
+cassandra = CassandraCluster()
+app.config['CASSANDRA_NODES'] = ['52.8.165.110']
 
 @app.route('/index')
 def index():
@@ -14,11 +14,11 @@ def index():
        title = 'Home',
        user = user)
 
-@app.route("/cassandra_test")
+@app.route('/cassandra_test')
 def cassandra_test():
-    app = Flask(__name__)
-    cassandra = CassandraCluster()
-    app.config['CASSANDRA_NODES'] = ['52.8.165.110']
+    #app = Flask(__name__)
+    #cassandra = CassandraCluster()
+    #app.config['CASSANDRA_NODES'] = ['52.8.165.110']
     #app.config['CASSANDRA_NODES'] = ['52.8.165.110','52.8.81.20', '52.8.160.0', '52.8.160.210']
    
     session = cassandra.connect()
@@ -29,7 +29,10 @@ def cassandra_test():
 
     cities=[]
     for result in query_results:
+	print (result)
 	cities.append(dict(ad_group_id=result[0], bid_actions=result[1], bid_type=result[2]))
     
     return render_template('cities.html', cities=cities)
 
+if __name__ == '__main__':
+    app.run(host='0.0.0.0', debug=True)
