@@ -1,12 +1,12 @@
 $(function () {
-    $('#container').highcharts({
+    $('#pie_chart').highcharts({
         chart: {
             plotBackgroundColor: null,
             plotBorderWidth: null,
             plotShadow: false
         },
         title: {
-            text: 'Browser market shares at a specific website, 2014'
+            text: 'Distribution of bid types, June 2015'
         },
         tooltip: {
             pointFormat: '{series.name}: <b>{point.percentage:.1f}%</b>'
@@ -26,8 +26,8 @@ $(function () {
         },
         series: [{
             type: 'pie',
-            name: 'Browser share',
-            data: [['apple', a],['ball', b],['cat',c],['dog',d],['egg',e]]
+            name: 'Bid Type share',
+            data: [['ABSOLUTE_OCPM', 81730],['RELATIVE_OCPM', 2256],['MULTI_PREMIUM',78],['CPA', 1836],['CPC',7370],['CPM',924]]
         }]
     });
 });

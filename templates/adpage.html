@@ -44,13 +44,14 @@
             <span class="icon-bar"></span>
             <span class="icon-bar"></span>
           </button>
-          <a class="navbar-brand" href="#">Project name</a>
+          <a class="navbar-brand" href="#">Ads Report Card</a>
         </div>
         <div id="navbar" class="collapse navbar-collapse">
           <ul class="nav navbar-nav">
             <li class="active"><a href="#home" aria-controls="home" role="tab" data-toggle="tab">Home</a></li>
-            <li><a href="#analytics" aria-controls="analytics" role="tab" data-toggle="tab">Analytics</a></li>
-            <li><a href="#queries" aria-controls="queries" role="tab" data-toggle="tab">Queries</a></li>
+       	    <li><a href="#analytics" aria-controls="slides" role="tab" data-toggle="tab">Analyics</a></li>
+	    <li><a href="#slides" aria-controls="slides" role="tab" data-toggle="tab">Slides</a></li>
+            <li><a href="#about" aria-controls="about" role="tab" data-toggle="tab">About Me</a></li>
           </ul>
 
 
@@ -64,13 +65,14 @@
           <h1>Ads Report Card</h1>
           <p class="lead">Welcome to reporting page for Ads Performance.<br> See how your ads are doing!</p>
         </div>
+
         <div align="center" role="tabpanel" class="tab-pane active" id="home">
         
         <form id="surveyForm" method="post" class="form-horizontal" action="#home">
           <div class="form-group">
             <label class="col-xs-3 control-label">Enter Ad Account ID</label>
             <div class="col-xs-4">
-              <input type="type" class="form-control" name="first" />
+              <input type="text" class="form-control" name="first" value ="1431971797052032" />
             </div>
 
             <div class="col-xs-4">
@@ -87,36 +89,60 @@
             </div>
           </div>
         </form>
-	<div id="timeseries" style="float:right; width:50%; height:400px;">
+
+	<script> var account = {{ account  }} </script>
+	<script> var ad_set = {{ ad_set }} </script>
+        {% if table %}
+	<p class="lead"> Results for Ad Account: {{ account }}</p>
+        
+        <table class="table table-bordered">
+         <tr><th>Ad Set ID</th><th>Bid Type</th><th>Date Start</th></tr>
+         {% for adset in ad_set_data %}
+         <tr><td>{{ adset['ad_group_id'] }}</td><td>{{ adset['bid_type']}}</td><td> {{ adset['date_start'] }}</td></tr>
+         {% endfor %}
+         </table>
+        {% endif %}
+	
+	{% if graph %}
+	<br><br><br>
+	<p class="lead"> Results for Ad Set: {{ ad_set }}</p>
+	<div id="timeseries" style="float:left; width:50%; height:400px;">
         <script> var clicks_data = {{ clicks_data  }} </script>
         </div>
 
-        <div id="pie_chart" style="float:left; width:50%; height:400px;">
-        <script> var chart_data = {{ chart_data }} </script>
+	<div id="costseries" style="float:right; width:50%; height:400px;">
+        <script> var cost_data = {{ cost_data  }} </script>
         </div>
-	<br><br>
-	{% if graph %}
-            <script src= "../static/js/timeseries.js"></script>
-            <script src= "../static/js/pie.js"></script>
-	{% endif %}
+	
+        <!--div id="actionseries" style="float:right; width:50%; height:400px;"-->
+        <!--script> var actions = {{ actions  }} </script-->
+        </div-->
 
-	{% if table %}
-	<table class="table table-hover">
-  	 <tr><th>Account ID</th><th>Ad Set ID</th><th>Date Start</th><th>Bid Type</th></tr>
-  	 {% for adset in adsets %}
-  	 <tr><td>{{ adset['account_id'] }}</td><td>{{ adset['adset_id']}}</td><td> {{ adset['date_start'] }}</td>><td> {{ adset['bid_type'] }}</td></tr>
-  	 {% endfor %}
-  	 </table>
+            <script src= "../static/js/timeseries.js"></script>
+	    <script src= "../static/js/costseries.js"></script>
+	    <script src= "../static/js/actionseries.js"></script>
 	{% endif %}
 
      </div>     
 
-      <div role="tabpanel" class="tab-pane" id="analytics">
-      This is analytics page.
+      <div align = "center" role="tabpanel" class="tab-pane" id="slides">
+      <iframe src="https://www.slideshare.net/slideshow/embed_code/key/BeOCEiKoOYDugn" width="700" height="600" frameborder="0" marginwidth="10" marginheight="10" scrolling="no"></iframe>
       </div>
 
-      <div role="tabpanel" class="tab-pane" id="queries">This is queries page</div>
-      <div role="tabpanel" class="tab-pane" id="settings">...</div>
+      <div role="tabpanel" class="tab-pane" id="analytics">
+
+	<div id="pie_chart" style="float:left; width:50%; height:400px;">
+        <script> var chart_data = {{ chart_data }} </script>
+        </div>
+	<script src= "../static/js/pie.js"></script>
+
+	<div id="cost_bar_chart" style="float:right; width:50%; height:400px;">
+        </div>
+        <script src= "../static/js/cost_bar_chart.js"></script>
+       
+      </div>
+
+      <div role="tabpanel" class="tab-pane" id="about">This is About Me page</div>
     </div>
 
       <!--script src="https://code.jquery.com/jquery-1.10.2.min.js"></script-->
