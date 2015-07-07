@@ -10,14 +10,7 @@ $(function () {
             
         },
         xAxis: {
-            categories: [
-                'ABSOLUTE_OCPM',
-                'MULTI_PREMIUM',
-                'CPA',
-                'CPC',
-                'CPM',
-                'None'
-            ],
+            categories: ['CPC','CPM','CPA','ABSOLUTE_OCPM','MULTI_PREMIUM'],
             crosshair: true
         },
         yAxis: {
@@ -42,11 +35,11 @@ $(function () {
         },
         series: [{
             name: 'Per Result',
-            data: [1.451900, 0.232911, 1.348726, 0.821144, 1.899272, 1.439996]
+            data: cost_per_result
 
         }, {
             name: 'Per Total Action',
-            data: [0.608176, 0.169653, 0.366932, 0.197947, 0.766964, 0.592445]
+            data: cost_per_action
 
         }]
     });

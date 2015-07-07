@@ -12,16 +12,26 @@ def cassandra_test():
     session.set_keyspace("fb_report")
 
     if request.method == 'GET':
-	return render_template('adpage.html',table = False, graph = False)
+	
+	cql = "SELECT * FROM cost_table"
+        cql_results = session.execute(cql)
+
+	bid_categories=[]
+	cost_per_action=[]
+	cost_per_result=[]
+
+	for result in cql_results:
+		bid_categories.append(result[0])
+		cost_per_action.append(result[1])
+		cost_per_result.append(result[2])
+
+	return render_template('adpage.html', bid_categories=bid_categories, cost_per_action=cost_per_action, cost_per_result=cost_per_result, table = False, graph = False)
     
     elif request.method == 'POST':
 	
 	if request.form["first"]:
 		input_id = request.form["first"]
 
-#		session = cassandra.connect()
-#		session.set_keyspace("fb_report")
-	
 		#cql = "SELECT ad_id, date_start, clicks, cost_per_unique_click, actions_per_impression  FROM ads_table WHERE ad_id= %s" % (input_id)
 		#query_results = session.execute(cql)
 
